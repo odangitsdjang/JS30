@@ -31,29 +31,60 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(obj=> {
+      return Math.floor(obj.year / 100) === 15;
+    });
+    console.log(fifteen);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    const fullNames = inventors.map(obj => {
+      return `${obj.first} ${obj.last}`;
+    });
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const ordered = inventors.sort((a,b) => {
+      return a.year > b.year ? 1 : -1 ;
+    });
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const totalYearsLived = inventors.reduce((acc, el) => {
+      return acc + (el.passed - el.year);
+    }, 0);
+    console.log(totalYearsLived);
 
     // 5. Sort the inventors by years lived
+    const yearsLivedSorted = inventors.map(obj => {
+      return {[`${obj.first} ${obj.last}`]: obj.passed-obj.year};
+    }).sort((a,b) => {
+      return Object.values(a)[0] - Object.values(b)[0];
+    });
+    console.log(yearsLivedSorted);
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    const category = document.querySelectorAll('.mw-category a');
+    const links = [...category];
+    const de = links.map(link => link.textContent)
+                    .filter(street => street.includes('de'));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+    const lastNameSorted = inventors.sort((a,b)=> a.last > b.last ? 1 : -1 );
+    console.log(lastNameSorted);
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    const transportation = data.reduce((acc,el)=> {
+      if (!acc[el]) {
+        acc[el] =  0;
+      }
+      acc[el]++;
+      return acc;
+    }, {});
   </script>
 </body>
 </html>
